@@ -10,13 +10,13 @@ export function middleware(request: NextRequest) {
   // })
   
   // Если пользователь не авторизован и пытается получить доступ к защищенным маршрутам
-  if (!authToken && request.nextUrl.pathname.startsWith('/main')) {
+  if (!authToken && request.nextUrl.pathname.startsWith('/TodoNext/main')) {
     console.log('Redirecting to login - no token')
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
   
   // Если пользователь авторизован и пытается получить доступ к auth-маршрутам
-  if (authToken && request.nextUrl.pathname.startsWith('/auth')) {
+  if (authToken && request.nextUrl.pathname.startsWith('bartcevich.github.io/TodoNext/auth')) {
     console.log('Redirecting to dashboard - already authenticated')
     return NextResponse.redirect(new URL('/main/tasks', request.url))
   }
