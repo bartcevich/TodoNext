@@ -3,6 +3,7 @@
 First, run the development server:
 
 ```bash
+npm install  Установите зависимости
 npm run dev запустить приложение в режиме разработки
 npm run build создать производство-сборку
 ```
