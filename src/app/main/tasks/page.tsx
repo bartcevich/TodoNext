@@ -9,8 +9,10 @@ import {
   setCurrentList,
 } from "@/store/slices/tasksSlice";
 import type { RootState } from "@/store/store";
+import { useAuth } from "@/shared/hooks/useAuth";
 
 export default function TasksPage() {
+  useAuth(); // Будет редиректить если не авторизован
   const [newListName, setNewListName] = useState("");
   const [editingListId, setEditingListId] = useState<string | null>(null);
   const [editedListName, setEditedListName] = useState("");
