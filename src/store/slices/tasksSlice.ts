@@ -1,4 +1,3 @@
-// store/slices/tasksSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface Task {
@@ -8,14 +7,16 @@ interface Task {
   listId: string
 }
 
+interface TaskList {
+  id: string;
+  name: string;
+  tasks: Task[];
+  createdAt: string;
+}
+
 interface TasksState {
-  lists: {
-    [key: string]: {
-      name: string
-      tasks: Task[]
-    }
-  }
-  currentListId: string | null
+  lists: Record<string, TaskList>; // Используем TaskList вместо встроенного типа
+  currentListId: string | null;
 }
 
 const initialState: TasksState = {
@@ -28,10 +29,13 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {
     addList: (state, action: PayloadAction<{ id: string; name: string }>) => {
-      state.lists[action.payload.id] = {
-        name: action.payload.name,
+      const { id, name } = action.payload;
+      state.lists[id] = {
+        id,
+        name,
         tasks: [],
-      }
+        createdAt: new Date().toISOString(),
+      };
     },
     editList: (state, action: PayloadAction<{ id: string; name: string }>) => {
       if (state.lists[action.payload.id]) {
@@ -44,14 +48,16 @@ export const tasksSlice = createSlice({
         state.currentListId = null
       }
     },
-    addTask: (state, action: PayloadAction<{ listId: string; task: Omit<Task, 'listId' | 'completed'> }>) => {
-      const { listId, task } = action.payload
+    addTask: (state, action: PayloadAction<{
+      listId: string;
+      task: Omit<Task, 'completed'>;
+    }>) => {
+      const { listId, task } = action.payload;
       if (state.lists[listId]) {
         state.lists[listId].tasks.push({
           ...task,
-          listId,
           completed: false,
-        })
+        });
       }
     },
     toggleTask: (state, action: PayloadAction<{ listId: string; taskId: string }>) => {
