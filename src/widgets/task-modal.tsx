@@ -122,7 +122,7 @@ export const TaskModal = ({ task, listId, onClose }: TaskModalProps) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
         {/* Скрытый аудиоэлемент для уведомления */}
-        <audio ref={audioRef} src="/notification.mp3" preload="auto" />
+        <audio ref={audioRef} src="/public/notification.mp3" preload="auto" />
 
         {/* Шапка модального окна */}
         <div className="flex justify-between items-center mb-4 text-blue-500">
