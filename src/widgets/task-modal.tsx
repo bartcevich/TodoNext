@@ -105,7 +105,7 @@ export const TaskModal = ({ task, listId, onClose }: TaskModalProps) => {
       })
     );
     setIsEditing(false);
-    onClose();
+    // onClose();
   };
 
   const handleDelete = () => {
