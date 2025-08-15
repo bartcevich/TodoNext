@@ -1,21 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface Task {
-  id: string
-  title: string
-  completed: boolean
-  listId: string
-}
-
-interface TaskList {
-  id: string;
-  name: string;
-  tasks: Task[];
-  createdAt: string;
-}
+import type { Task, TaskList } from '@/entities/task-list/types';
 
 interface TasksState {
-  lists: Record<string, TaskList>; // Используем TaskList вместо встроенного типа
+  lists: Record<string, TaskList>;
   currentListId: string | null;
 }
 
@@ -49,17 +36,40 @@ export const tasksSlice = createSlice({
       }
     },
     addTask: (state, action: PayloadAction<{
-      listId: string;
-      task: Omit<Task, 'completed'>;
-    }>) => {
-      const { listId, task } = action.payload;
-      if (state.lists[listId]) {
-        state.lists[listId].tasks.push({
-          ...task,
-          completed: false,
-        });
-      }
-    },
+  listId: string;
+  task: Omit<Task, 'completed' | 'muteNotifications'>;
+}>) => {
+  const { listId, task } = action.payload;
+  if (state.lists[listId]) {
+    state.lists[listId].tasks.push({
+      ...task,
+      description: task.description || "", // Обеспечиваем наличие description
+      completed: false,
+      muteNotifications: false
+    });
+  }
+},
+    editTask: (state, action: PayloadAction<{
+    listId: string;
+    taskId: string;
+    changes: Partial<Omit<Task, 'id' | 'listId'>>;
+  }>) => {
+    const { listId, taskId, changes } = action.payload;
+    const task = state.lists[listId]?.tasks.find(t => t.id === taskId);
+    if (task) {
+      Object.assign(task, changes);
+    }
+  },
+  deleteTask: (state, action: PayloadAction<{
+    listId: string;
+    taskId: string;
+  }>) => {
+    const { listId, taskId } = action.payload;
+    const tasks = state.lists[listId]?.tasks;
+    if (tasks) {
+      state.lists[listId].tasks = tasks.filter(t => t.id !== taskId);
+    }
+  },
     toggleTask: (state, action: PayloadAction<{ listId: string; taskId: string }>) => {
       const { listId, taskId } = action.payload
       const task = state.lists[listId]?.tasks.find(t => t.id === taskId)
@@ -78,9 +88,12 @@ export const {
   addList, 
   editList, 
   deleteList, 
-  addTask, 
+  addTask,
+  editTask,
+  deleteTask, 
   toggleTask, 
   setCurrentList 
 } = tasksSlice.actions
 
+// export type { TasksState };
 export default tasksSlice.reducer

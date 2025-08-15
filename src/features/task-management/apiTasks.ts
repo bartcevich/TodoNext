@@ -13,15 +13,16 @@ export const useTasks = (listId: string) => {
     dispatch(addTask({
       listId,
       task: {
-          id: crypto.randomUUID(),
-          title,
-          listId: ''
+        id: crypto.randomUUID(),
+        title,
+        description: "", // Добавляем обязательное поле
+        listId: listId // Используем переданный listId
       }
     }));
   };
 
   return { 
-    tasks: tasks as Task[], // Явное приведение типа
+    tasks: tasks as Task[],
     addTask: handleAddTask 
   };
 };

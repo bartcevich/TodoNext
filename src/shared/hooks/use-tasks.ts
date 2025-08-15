@@ -1,9 +1,3 @@
-// use-tasks.ts
-// export const useTasks = (listId: string) => {
-//   const [tasks, setTasks] = useState<Task[]>([]);
-//   const addTask = (title: string) => { ... };
-//   return { tasks, addTask };
-// };
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '@/store/store';
 import { addList } from '@/store/slices/tasksSlice';

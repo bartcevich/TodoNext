@@ -1,8 +1,11 @@
+// entities/task/types.ts
 export interface Task {
   id: string;
   title: string;
-  description?: string;
+  description: string;
   completed: boolean;
   listId: string;
-  createdAt?: Date;
+  dueDate?:  string | null;
+  muteNotifications?: boolean;
+  createdAt?: string;
 }

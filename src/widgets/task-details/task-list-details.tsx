@@ -3,6 +3,7 @@ import { useTasks } from "@/features/task-management/apiTasks";
 import { useState } from "react";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import { TaskCard } from "../task-card";
 
 interface TaskListDetailsProps {
   listId: string;
@@ -18,7 +19,7 @@ export const TaskListDetails = ({ listId }: TaskListDetailsProps) => {
       setNewTaskTitle("");
     }
   };
-
+  // console.log("task-list-details.tsx", listId, tasks);
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
@@ -29,12 +30,9 @@ export const TaskListDetails = ({ listId }: TaskListDetailsProps) => {
         />
         <Button onClick={handleAddTask}>Добавить</Button>
       </div>
-
       <div className="space-y-2">
-        {tasks.map((task) => (
-          <div key={task.id} className="p-3 border rounded text-blue-500">
-            {task.title}
-          </div>
+        {tasks.map((task, index) => (
+          <TaskCard key={index} task={task} listId={listId} />
         ))}
       </div>
     </div>

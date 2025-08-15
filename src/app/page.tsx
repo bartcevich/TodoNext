@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function WelcomePage() {
-  console.log('new version');
+  // console.log('new version');
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="text-center max-w-2xl p-8 bg-white rounded-lg shadow-md">

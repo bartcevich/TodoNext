@@ -5,7 +5,7 @@ interface TaskListCardProps {
 }
 
 export const TaskListCard = ({ list }: TaskListCardProps) => {
-  console.log(list);
+  // console.log(list);
   return (
     <div className="p-4 border rounded-lg">
       <h3 className="font-medium text-blue-500">создано: {list.createdAt}</h3>

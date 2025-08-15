@@ -34,7 +34,7 @@ export default function LoginPage() {
         })
       );
       document.cookie = `authToken=fake-jwt-token; path=/; max-age=${60 * 3}`;
-      console.log("rout tasks");
+      // console.log("rout tasks");
       router.push("/main/tasks");
     } else {
       setError(
